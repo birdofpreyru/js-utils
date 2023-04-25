@@ -1,0 +1,23 @@
+{
+  "name": "@dr.pogodin/js-utils",
+  "version": "0.0.1",
+  "description": "Collection of JavaScript (TypeScript) utilities.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/birdofpreyru/js-utils.git"
+  },
+  "keywords": [
+    "javascript",
+    "util",
+    "utility"
+  ],
+  "author": "Dr. Sergey Pogodin <doc@pogodin.studio> (https://dr.pogodin.studio)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/birdofpreyru/js-utils/issues"
+  },
+  "homepage": "https://github.com/birdofpreyru/js-utils#readme"
+}
