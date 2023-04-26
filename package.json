@@ -4,7 +4,8 @@
   "description": "Collection of JavaScript (TypeScript) utilities.",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --ext .js,.ts",
+    "test": "npm run lint && tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,12 @@
   "homepage": "https://github.com/birdofpreyru/js-utils#readme",
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
     "typescript": "^5.0.4"
   }
 }
