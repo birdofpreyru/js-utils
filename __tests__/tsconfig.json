@@ -1,0 +1,7 @@
+{
+  "extends": "@tsconfig/recommended",
+  "include": ["**/*"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}
