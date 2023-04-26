@@ -2,6 +2,10 @@
   "name": "@dr.pogodin/js-utils",
   "version": "0.0.1",
   "description": "Collection of JavaScript (TypeScript) utilities.",
+  "main": "js/index",
+  "react-native": "ts/index",
+  "source": "ts/index",
+  "types": "js/index.d.ts",
   "scripts": {
     "build": "tsc",
     "jest": "jest --config jest.config.js",

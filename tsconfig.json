@@ -2,6 +2,7 @@
   "extends": "@tsconfig/recommended",
   "include": ["ts/**/*"],
   "compilerOptions": {
+    "declaration": true,
     "outDir": "js"
   }
 }
