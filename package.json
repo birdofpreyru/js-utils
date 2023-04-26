@@ -6,7 +6,7 @@
     "build": "tsc",
     "jest": "jest --config jest.config.js",
     "lint": "eslint . --ext .js,.ts",
-    "test": "npm run lint && npm run typescript && npm run jest",
+    "test": "npm run lint && npm run typecheck && npm run jest",
     "typecheck": "tsc --noEmit && tsc --project __tests__/tsconfig.json"
   },
   "repository": {

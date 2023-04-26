@@ -51,6 +51,16 @@ export class Barrier<T, TR = T> extends Promise<TR> {
 
   get settled() { return this.state !== STATE.PENDING; }
 
+  catch<TR1>(
+    onRejected?: ((reason: any) => TR1 | PromiseLike<TR1>) | null,
+  ): Barrier<T, TR1> {
+    return <Barrier<T, TR1>> super.catch(onRejected);
+  }
+
+  finally(onFinally?: (() => void) | null): Barrier<TR> {
+    return <Barrier<TR>> super.finally(onFinally);
+  }
+
   then<TR1, TR2>(
     onFulfilled?: ((value: TR) => TR1 | PromiseLike<TR1>) | null,
     onRejected?: ((reason: any) => TR2 | PromiseLike<TR2>) | null,

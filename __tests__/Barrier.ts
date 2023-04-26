@@ -1,10 +1,11 @@
-import { Barrier } from '../ts/Barrier';
+import { Barrier, newBarrier } from '../ts/Barrier';
 
 describe('Base usage', () => {
-  it('.resolved and .rejected are "false" initially', () => {
+  test('initial values of barrier properties are correct', () => {
     const barrier = new Barrier();
     expect(barrier.rejected).toBe(false);
     expect(barrier.resolved).toBe(false);
+    expect(barrier.settled).toBe(false);
   });
 
   it('resolves', async () => {
@@ -12,6 +13,7 @@ describe('Base usage', () => {
     barrier.resolve('OK');
     expect(barrier.rejected).toBe(false);
     expect(barrier.resolved).toBe(true);
+    expect(barrier.settled).toBe(true);
     await expect(barrier).resolves.toBe('OK');
   });
 
@@ -20,6 +22,7 @@ describe('Base usage', () => {
     barrier.reject('OK');
     expect(barrier.rejected).toBe(true);
     expect(barrier.resolved).toBe(false);
+    expect(barrier.settled).toBe(true);
     await expect(barrier).rejects.toBe('OK');
   });
 });
@@ -67,5 +70,13 @@ describe('.finally()', () => {
     const barrier = (new Barrier()).finally(() => { throw 'ERROR'; });
     barrier.reject('OGH');
     await expect(barrier).rejects.toBe('ERROR');
+  });
+});
+
+describe('newBarrier()', () => {
+  it('creates a functional barrier', async () => {
+    const barrier = newBarrier();
+    barrier.resolve('OK');
+    await expect(barrier).resolves.toBe('OK');
   });
 });
