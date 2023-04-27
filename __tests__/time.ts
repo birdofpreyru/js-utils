@@ -15,9 +15,23 @@ test('Misc aliases', () => {
   expect(YEAR_MS).toBe(365 * 24 * 60 * 60 * 1000);
 });
 
-test('timer()', async () => {
-  const before = Date.now();
-  await timer(500);
-  const after = Date.now();
-  expect(after - before >= 500).toBe(true);
+describe('timer()', () => {
+  test('basic use case', async () => {
+    const before = Date.now();
+    const t = timer(500);
+    await t;
+    const after = Date.now();
+    expect(t.timeout).toBe(500);
+    expect(after - before >= 500).toBe(true);
+  });
+
+  test('.then()', async () => {
+    const before = Date.now();
+    const t = timer(500).then(() => 'OK');
+    await t;
+    const dt = Date.now() - before;
+    expect(t.timeout).toBe(500);
+    expect(dt >= 500).toBe(true);
+    expect(dt < 750).toBe(true);
+  });
 });

@@ -6,20 +6,48 @@ export const HOUR_MS = 60 * MIN_MS;
 export const DAY_MS = 24 * HOUR_MS;
 export const YEAR_MS = 365 * DAY_MS;
 
-class Timer<T> extends Barrier<void, T> {
+// TODO: Ok, as we have ended up with a Timer class, mostly to achieve a good
+// TypeScript typing for timer() function, it makes sense to expose the class
+// from the library as well, and it should be documented later.
+export class Timer<T> extends Barrier<void, T> {
   private p_abort: () => void;
+
+  private p_timeout?: number;
 
   get abort(): () => void { return this.p_abort; }
 
-  constructor(executor?: Executor<T>, timeout: number = 0) {
+  get timeout(): number | undefined { return this.p_timeout; }
+
+  /**
+   * Creates a new, non-initialized instance of Timer. Call .init() method
+   * to actually initialize and launch the timer.
+   *
+   * NOTE: Although it might be tempting to accept `timeout` value as
+   * a constructor's argument, it won't work well, because Timer is an
+   * extension of Promise (via Barrier), and the way Promises works (in
+   * particular their .then() method, which internally calls constructor()
+   * with special executor) does not play along with initalization depending
+   * on custom parameters done in constructor().
+   *
+   * @param executor
+   */
+  constructor(executor?: Executor<T>) {
     super(executor);
+    this.p_abort = () => {};
+  }
+
+  init(timeout: number): Timer<T> {
+    if (this.p_timeout !== undefined) {
+      throw Error('This Timer is initialized already');
+    }
+    this.p_timeout = timeout;
     if (timeout > 0) {
       const id = setTimeout(super.resolve.bind(this), timeout);
       this.p_abort = () => clearTimeout(id);
     } else {
-      this.p_abort = () => {};
       super.resolve();
     }
+    return this;
   }
 
   then<TR1, TR2>(
@@ -27,7 +55,7 @@ class Timer<T> extends Barrier<void, T> {
     onRejected?: ((reason: any) => TR2 | PromiseLike<TR2>) | null,
   ): Timer<TR1 | TR2> {
     const res = <Timer<TR1 | TR2>> super.then(onFulfilled, onRejected);
-    res.p_abort = this.p_abort;
+    if (this.timeout !== undefined) res.init(this.timeout);
     return res;
   }
 }
@@ -39,6 +67,7 @@ class Timer<T> extends Barrier<void, T> {
  *  .abort() method attached, which cancels the pending timer resolution
  *  (without resolving or rejecting the barrier).
  */
-export async function timer(timeout: number) {
-  return new Timer<void>(undefined, timeout);
+export function timer(timeout: number): Timer<void> {
+  const t = new Timer<void>();
+  return t.init(timeout);
 }
