@@ -2,9 +2,9 @@
 
 # JS Utils
 
-[_TODO: Latest NPM version / Link to NPM package page_]
-[_TODO: NPM monthly downloads count / Link to NPM package page_]
-[_TODO: CircleCI status of primary branch build / Link to CircleCI project page_]
+[![Latest NPM Release](https://img.shields.io/npm/v/@dr.pogodin/js-utils.svg)](https://www.npmjs.com/package/@dr.pogodin/js-utils)
+[![NPM Downloads](https://img.shields.io/npm/dm/@dr.pogodin/js-utils.svg)](https://www.npmjs.com/package/@dr.pogodin/js-utils)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/birdofpreyru/js-utils/tree/master.svg?style=shield)](https://app.circleci.com/pipelines/github/birdofpreyru/js-utils)
 [![GitHub repo stars](https://img.shields.io/github/stars/birdofpreyru/js-utils?style=social)](https://github.com/birdofpreyru/js-utils)
 
 The aim for this repo/package is to move in from the [React Utils] the pieces
