@@ -23,3 +23,5 @@ Yeah, the source code will be written in TypeScript, and for the library
 version released to NPM it will be also compiled into plain JavaScript.
 Consumers of that NPM package thus will have access to both TS (`/ts` folder)
 and JS (`/js` folder) version of the library.
+
+[![Sponsor](.README/sponsor.png)](https://github.com/sponsors/birdofpreyru)
