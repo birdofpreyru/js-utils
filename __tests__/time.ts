@@ -19,5 +19,5 @@ test('timer()', async () => {
   const before = Date.now();
   await timer(500);
   const after = Date.now();
-  expect(after - before > 500).toBe(true);
+  expect(after - before >= 500).toBe(true);
 });
