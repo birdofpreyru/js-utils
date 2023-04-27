@@ -10,7 +10,7 @@
     "build": "rimraf js && tsc",
     "jest": "jest --config jest.config.js",
     "lint": "eslint . --ext .js,.ts",
-    "test": "npm run lint && npm run typecheck && npm run build && npm run jest",
+    "test": "npm run build && npm run lint && npm run typecheck && npm run jest",
     "typecheck": "tsc --noEmit && tsc --project __tests__/ts/tsconfig.json"
   },
   "repository": {
