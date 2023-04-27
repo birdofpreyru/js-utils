@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`exports expected definitions 1`] = `
+{
+  "Barrier": [Function],
+  "DAY_MS": 86400000,
+  "Emitter": [Function],
+  "HOUR_MS": 3600000,
+  "MIN_MS": 60000,
+  "SEC_MS": 1000,
+  "Semaphore": [Function],
+  "YEAR_MS": 31536000000,
+  "timer": [Function],
+}
+`;

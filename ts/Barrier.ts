@@ -1,6 +1,6 @@
 type Resolver<T> = (value: T | PromiseLike<T>) => void;
 type Rejecter = (reason?: any) => void;
-type Executor<T> = (resolve: Resolver<T>, reject: Rejecter) => void;
+export type Executor<T> = (resolve: Resolver<T>, reject: Rejecter) => void;
 
 enum STATE {
   PENDING = 'PENDING',
@@ -14,12 +14,12 @@ enum STATE {
  *
  * Docs: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
  */
-export class Barrier<T, TR = T> extends Promise<TR> {
-  private resolver: Resolver<T> | Resolver<TR>;
+export default class Barrier<T, TR = T> extends Promise<TR> {
+  private p_resolve: Resolver<T> | Resolver<TR>;
 
-  private rejecter: Rejecter;
+  private p_reject: Rejecter;
 
-  private state = STATE.PENDING;
+  private p_state = STATE.PENDING;
 
   constructor(executor?: Executor<TR>) {
     let resolveRef: Resolver<TR>;
@@ -28,28 +28,28 @@ export class Barrier<T, TR = T> extends Promise<TR> {
     super((resolve, reject) => {
       resolveRef = (value: TR | PromiseLike<TR>) => {
         resolve(value);
-        this.state = STATE.RESOLVED;
+        this.p_state = STATE.RESOLVED;
       };
       rejectRef = (reason?: any) => {
         reject(reason);
-        this.state = STATE.REJECTED;
+        this.p_state = STATE.REJECTED;
       };
       if (executor) executor(resolveRef, rejectRef);
     });
 
-    this.resolver = resolveRef!;
-    this.rejecter = rejectRef!;
+    this.p_resolve = resolveRef!;
+    this.p_reject = rejectRef!;
   }
 
-  get resolve() { return <Resolver<T>> this.resolver; }
+  get resolve() { return <Resolver<T>> this.p_resolve; }
 
-  get reject() { return this.rejecter; }
+  get reject() { return this.p_reject; }
 
-  get resolved() { return this.state === STATE.RESOLVED; }
+  get resolved() { return this.p_state === STATE.RESOLVED; }
 
-  get rejected() { return this.state === STATE.REJECTED; }
+  get rejected() { return this.p_state === STATE.REJECTED; }
 
-  get settled() { return this.state !== STATE.PENDING; }
+  get settled() { return this.p_state !== STATE.PENDING; }
 
   catch<TR1>(
     onRejected?: ((reason: any) => TR1 | PromiseLike<TR1>) | null,
@@ -66,16 +66,8 @@ export class Barrier<T, TR = T> extends Promise<TR> {
     onRejected?: ((reason: any) => TR2 | PromiseLike<TR2>) | null,
   ): Barrier<T, TR1 | TR2> {
     const res = <Barrier<T, TR1 | TR2>> super.then(onFulfilled, onRejected);
-    res.resolver = this.resolve;
-    res.rejecter = this.reject;
+    res.p_resolve = this.resolve;
+    res.p_reject = this.reject;
     return res;
   }
-}
-
-/**
- * Creates a new Barrier.
- * @returns {Barrier}
- */
-export function newBarrier<T>(executor?: Executor<T>) {
-  return new Barrier<T>(executor);
 }

@@ -1,7 +1,7 @@
 {
   "extends": ["airbnb-base"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
+  "rules": {
+    "no-plusplus": 0
   },
   "settings": {
     "import/resolver": {

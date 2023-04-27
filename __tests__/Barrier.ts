@@ -1,4 +1,4 @@
-import { Barrier, newBarrier } from '../ts/Barrier';
+import Barrier from '../ts/Barrier';
 
 describe('Base usage', () => {
   test('initial values of barrier properties are correct', () => {
@@ -50,33 +50,22 @@ describe('.then()', () => {
 
 describe('.catch()', () => {
   it('rejects correctly when chained', async () => {
-    // eslint-disable-next-line no-throw-literal
-    const barrier = (new Barrier()).catch(() => { throw 'ERROR'; });
+    const barrier = (new Barrier()).catch(() => { throw Error('ERROR'); });
     barrier.reject('OGH');
-    await expect(barrier).rejects.toBe('ERROR');
+    await expect(barrier).rejects.toThrow('ERROR');
   });
 });
 
 describe('.finally()', () => {
   it('works as expected when chained (I)', async () => {
-    // eslint-disable-next-line no-throw-literal
-    const barrier = (new Barrier()).finally(() => { throw 'ERROR'; });
+    const barrier = (new Barrier()).finally(() => { throw Error('ERROR'); });
     barrier.resolve('OK');
-    await expect(barrier).rejects.toBe('ERROR');
+    await expect(barrier).rejects.toThrow('ERROR');
   });
 
   it('works as expected when chained (II)', async () => {
-    // eslint-disable-next-line no-throw-literal
-    const barrier = (new Barrier()).finally(() => { throw 'ERROR'; });
+    const barrier = (new Barrier()).finally(() => { throw Error('ERROR'); });
     barrier.reject('OGH');
-    await expect(barrier).rejects.toBe('ERROR');
-  });
-});
-
-describe('newBarrier()', () => {
-  it('creates a functional barrier', async () => {
-    const barrier = newBarrier();
-    barrier.resolve('OK');
-    await expect(barrier).resolves.toBe('OK');
+    await expect(barrier).rejects.toThrow('ERROR');
   });
 });
