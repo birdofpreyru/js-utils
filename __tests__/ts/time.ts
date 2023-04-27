@@ -5,7 +5,7 @@ import {
   SEC_MS,
   YEAR_MS,
   timer,
-} from '../ts/time';
+} from '../../ts/time';
 
 test('Misc aliases', () => {
   expect(SEC_MS).toBe(1000);

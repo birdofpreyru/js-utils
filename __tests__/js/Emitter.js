@@ -1,4 +1,4 @@
-import Emitter from '../ts/Emitter';
+import { Emitter } from '../../js';
 
 describe('constructor()', () => {
   it('creates a new emitter with empty listeners array', () => {

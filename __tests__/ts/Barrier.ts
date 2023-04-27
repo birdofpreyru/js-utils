@@ -1,4 +1,4 @@
-import Barrier from '../ts/Barrier';
+import Barrier from '../../ts/Barrier';
 
 describe('Base usage', () => {
   test('initial values of barrier properties are correct', () => {
