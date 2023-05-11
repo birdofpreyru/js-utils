@@ -6,6 +6,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/@dr.pogodin/js-utils.svg)](https://www.npmjs.com/package/@dr.pogodin/js-utils)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/birdofpreyru/js-utils/tree/master.svg?style=shield)](https://app.circleci.com/pipelines/github/birdofpreyru/js-utils)
 [![GitHub repo stars](https://img.shields.io/github/stars/birdofpreyru/js-utils?style=social)](https://github.com/birdofpreyru/js-utils)
+[![Dr. Pogodin Studio](https://raw.githubusercontent.com/birdofpreyru/js-utils/master/.README/logo-dr-pogodin-studio.png)](https://dr.pogodin.studio/docs/react-native-static-server)
 
 The aim for this repo/package is to move in from the [React Utils] the pieces
 which are not React-specific, thus are also useful cross non-React projects,
@@ -25,3 +26,39 @@ Consumers of that NPM package thus will have access to both TS (`/ts` folder)
 and JS (`/js` folder) version of the library.
 
 [![Sponsor](.README/sponsor.png)](https://github.com/sponsors/birdofpreyru)
+
+## Content
+
+The library currently exports (links below lead to [React Utils] docs,
+but the same stuff can be imported from this `@dr.pogodin/js-utils`,
+and used in the same way):
+
+[Barrier]: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
+[Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[timer]: https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#timer
+
+### Constants
+- [SEC_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#sec_ms)
+  &mdash; One second expressed in milliseconds.
+- [MIN_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#min_ms)
+  &mdash; One minute expressed in milliseconds.
+- [HOUR_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#hour_ms)
+  &mdash; One hour expressed in milliseconds.
+- [DAY_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#day_ms)
+  &mdash; One day expressed in milliseconds.
+- [YEAR_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#year_ms)
+  &mdash; One year expressed in milliseconds.
+
+### Functions
+- [timer]
+  &mdash; Creates a [Barrier] which resolves after the specified timeout.
+
+### Classes
+- [Barrier] &mdash; A [Promise] with **resolve()** and **reject()** exposed as
+  instance methods.
+- [Emitter](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Emitter)
+  &mdash; Simple listeneable data emitter.
+- [Semaphore](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Semaphore)
+  &mdash; Synchronization primitive.
+- `Timer` &mdash; The core implementation of [timer] functionality, allowing
+  to create further customized timer objects. _To be documented_.

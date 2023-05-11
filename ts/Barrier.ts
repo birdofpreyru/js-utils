@@ -14,7 +14,7 @@ enum STATE {
  *
  * Docs: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
  */
-export default class Barrier<T, TR = T> extends Promise<TR> {
+export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
   private p_resolve: Resolver<T> | Resolver<TR>;
 
   private p_reject: Rejecter;
