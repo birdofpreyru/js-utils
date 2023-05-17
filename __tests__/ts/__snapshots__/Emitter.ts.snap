@@ -92,6 +92,16 @@ exports[`.emit() calls connected listeners with given arguments 4`] = `
 ]
 `;
 
+exports[`.removeAllListeners removes all connected listeners 1`] = `
+[
+  [MockFunction A],
+  [MockFunction B],
+  [MockFunction C],
+]
+`;
+
+exports[`.removeAllListeners removes all connected listeners 2`] = `[]`;
+
 exports[`.removeListener() removes given listener if it is connected 1`] = `
 [
   [MockFunction A],

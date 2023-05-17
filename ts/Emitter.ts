@@ -40,6 +40,13 @@ export default class Emitter<T extends unknown[] = unknown[]> {
   }
 
   /**
+   * Removes all connected listeners.
+   */
+  removeAllListeners() {
+    this.p_listeners = [];
+  }
+
+  /**
    * Removes specified `listener`, if connected.
    * @param listener
    */

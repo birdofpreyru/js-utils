@@ -70,6 +70,21 @@ describe('.emit()', () => {
   });
 });
 
+describe('.removeAllListeners', () => {
+  it('removes all connected listeners', () => {
+    const e = new Emitter();
+    const fnA = jest.fn().mockName('A');
+    const fnB = jest.fn().mockName('B');
+    const fnC = jest.fn().mockName('C');
+    e.addListener(fnA);
+    e.addListener(fnB);
+    e.addListener(fnC);
+    expect(e.listeners).toMatchSnapshot();
+    e.removeAllListeners();
+    expect(e.listeners).toMatchSnapshot();
+  });
+});
+
 describe('.removeListener()', () => {
   it('removes given listener if it is connected', () => {
     const e = new Emitter();
