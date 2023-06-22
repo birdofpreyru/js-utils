@@ -1,4 +1,4 @@
-import { Emitter } from '../../js';
+import Emitter from '../src/Emitter';
 
 describe('constructor()', () => {
   it('creates a new emitter with empty listeners array', () => {
@@ -67,6 +67,21 @@ describe('.emit()', () => {
     e.emit('second call');
     expect(fnA.mock.calls).toMatchSnapshot();
     expect(fnB.mock.calls).toMatchSnapshot();
+  });
+});
+
+describe('.removeAllListeners', () => {
+  it('removes all connected listeners', () => {
+    const e = new Emitter();
+    const fnA = jest.fn().mockName('A');
+    const fnB = jest.fn().mockName('B');
+    const fnC = jest.fn().mockName('C');
+    e.addListener(fnA);
+    e.addListener(fnB);
+    e.addListener(fnC);
+    expect(e.listeners).toMatchSnapshot();
+    e.removeAllListeners();
+    expect(e.listeners).toMatchSnapshot();
   });
 });
 

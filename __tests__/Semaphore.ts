@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 
-import Semaphore from '../../ts/Semaphore';
-import { timer } from '../../ts/time';
+import Semaphore from '../src/Semaphore';
+import { timer } from '../src/time';
 
 describe('constructor', () => {
   it('creates non-ready semaphore by default', () => {
