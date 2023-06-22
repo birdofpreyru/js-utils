@@ -6,7 +6,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/@dr.pogodin/js-utils.svg)](https://www.npmjs.com/package/@dr.pogodin/js-utils)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/birdofpreyru/js-utils/tree/master.svg?style=shield)](https://app.circleci.com/pipelines/github/birdofpreyru/js-utils)
 [![GitHub repo stars](https://img.shields.io/github/stars/birdofpreyru/js-utils?style=social)](https://github.com/birdofpreyru/js-utils)
-[![Dr. Pogodin Studio](https://raw.githubusercontent.com/birdofpreyru/js-utils/master/.README/logo-dr-pogodin-studio.png)](https://dr.pogodin.studio/docs/js-utils)
+[![Dr. Pogodin Studio](https://raw.githubusercontent.com/birdofpreyru/js-utils/master/.README/logo-dr-pogodin-studio.svg)](https://dr.pogodin.studio/docs/js-utils)
 
 The aim for this repo/package is to move in from the [React Utils] the pieces
 which are not React-specific, thus are also useful cross non-React projects,
@@ -25,7 +25,7 @@ version released to NPM it will be also compiled into plain JavaScript.
 Consumers of that NPM package thus will have access to both TS (`/ts` folder)
 and JS (`/js` folder) version of the library.
 
-[![Sponsor](.README/sponsor.png)](https://github.com/sponsors/birdofpreyru)
+[![Sponsor](https://raw.githubusercontent.com/birdofpreyru/js-utils/master/.README/sponsor.svg)](https://github.com/sponsors/birdofpreyru)
 
 ## Content
 
