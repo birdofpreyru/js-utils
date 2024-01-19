@@ -1,12 +1,13 @@
 {
   "env": { "jest": true },
-  "extends": ["airbnb-typescript/base"],
+  "extends": ["airbnb-base", "airbnb-typescript/base"],
   "parserOptions": {
-    "project": "__tests__/tsconfig.json"
+    "project": "__tests__/tsconfig-all.json"
   },
   "rules": {
     "import/extensions": ["error", "always", {
       "ts": "never"
-    }]
+    }],
+    "no-plusplus": 0
   }
 }

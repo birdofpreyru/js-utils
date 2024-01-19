@@ -1,4 +1,4 @@
-import Barrier from '../src/Barrier';
+import Barrier from '../../src/Barrier';
 
 describe('Base usage', () => {
   test('initial values of barrier properties are correct', () => {

@@ -1,5 +1,11 @@
 {
   "extends": "@tsconfig/recommended",
+
+  // TODO: This actually breaks VSCode code analysis inside ts-types. We should
+  // do no exclusion here, but provide a different TS config file for Jest tests
+  // to use.
+  "exclude": ["ts-types"],
+
   "include": ["**/*"],
   "compilerOptions": {
     "noEmit": true

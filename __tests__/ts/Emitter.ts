@@ -1,4 +1,4 @@
-import Emitter from '../src/Emitter';
+import Emitter from '../../src/Emitter';
 
 describe('constructor()', () => {
   it('creates a new emitter with empty listeners array', () => {

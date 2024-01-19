@@ -1,10 +1,14 @@
 import Barrier, { type Executor } from './Barrier';
 
+// This is not very elegant, but as of now TypeScript does not support type
+// arithmetic, thus we can't have constants assigned like `MIN_MS = 60 * SEC_MS`
+// and have the result type to be 60000 (number literal), it would be just
+// the generic number type.
 export const SEC_MS = 1000;
-export const MIN_MS = 60 * SEC_MS;
-export const HOUR_MS = 60 * MIN_MS;
-export const DAY_MS = 24 * HOUR_MS;
-export const YEAR_MS = 365 * DAY_MS;
+export const MIN_MS = 60000; // 60 * SEC_MS
+export const HOUR_MS = 3600000; // 60 * MIN_MS
+export const DAY_MS = 86400000; // 24 * HOUR_MS
+export const YEAR_MS = 31536000000; // 365 * DAY_MS
 
 // TODO: Ok, as we have ended up with a Timer class, mostly to achieve a good
 // TypeScript typing for timer() function, it makes sense to expose the class

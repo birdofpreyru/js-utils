@@ -5,14 +5,14 @@ import {
   SEC_MS,
   YEAR_MS,
   timer,
-} from '../src/time';
+} from '../../src/time';
 
 test('Misc aliases', () => {
   expect(SEC_MS).toBe(1000);
-  expect(MIN_MS).toBe(60 * 1000);
-  expect(HOUR_MS).toBe(60 * 60 * 1000);
-  expect(DAY_MS).toBe(24 * 60 * 60 * 1000);
-  expect(YEAR_MS).toBe(365 * 24 * 60 * 60 * 1000);
+  expect(MIN_MS).toBe(60 * SEC_MS);
+  expect(HOUR_MS).toBe(60 * MIN_MS);
+  expect(DAY_MS).toBe(24 * HOUR_MS);
+  expect(YEAR_MS).toBe(365 * DAY_MS);
 });
 
 describe('timer()', () => {
