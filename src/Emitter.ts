@@ -33,7 +33,7 @@ export default class Emitter<T extends unknown[] = unknown[]> {
    * @param args
    */
   emit(...args: T) {
-    const { p_listeners: listeners } = this;
+    const listeners = this.p_listeners.slice();
     for (let i = 0; i < listeners.length; ++i) {
       listeners[i](...args);
     }

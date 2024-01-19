@@ -68,6 +68,22 @@ describe('.emit()', () => {
     expect(fnA.mock.calls).toMatchSnapshot();
     expect(fnB.mock.calls).toMatchSnapshot();
   });
+
+  it('notifies the listeners connected at the moment of .emit() call', () => {
+    const e = new Emitter();
+    const fnB = jest.fn().mockName('B');
+    const fnC = jest.fn().mockName('C');
+    const fnA = jest.fn(() => {
+      e.removeListener(fnB);
+      e.addListener(fnC);
+    }).mockName('A');
+    e.addListener(fnA);
+    e.addListener(fnB);
+    e.emit();
+    expect(fnA).toHaveBeenCalledTimes(1);
+    expect(fnB).toHaveBeenCalledTimes(1);
+    expect(fnC).not.toHaveBeenCalled();
+  });
 });
 
 describe('.removeAllListeners', () => {
