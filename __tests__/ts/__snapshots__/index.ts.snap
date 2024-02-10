@@ -12,5 +12,6 @@ exports[`exports expected definitions 1`] = `
   "Timer": [Function],
   "YEAR_MS": 31536000000,
   "timer": [Function],
+  "withRetries": [Function],
 }
 `;

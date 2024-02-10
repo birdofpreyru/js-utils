@@ -33,10 +33,6 @@ The library currently exports (links below lead to [React Utils] docs,
 but the same stuff can be imported from this `@dr.pogodin/js-utils`,
 and used in the same way):
 
-[Barrier]: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
-[Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-[timer]: https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#timer
-
 ### Constants
 - [SEC_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#sec_ms)
   &mdash; One second expressed in milliseconds.
@@ -50,8 +46,8 @@ and used in the same way):
   &mdash; One year expressed in milliseconds.
 
 ### Functions
-- [timer]
-  &mdash; Creates a [Barrier] which resolves after the specified timeout.
+- [timer()] &mdash; Creates a [Barrier] which resolves after the specified timeout.
+- [withRetries()] &mdash; Attempts a given action multiple times until its succeeds.
 
 ### Classes
 - [Barrier] &mdash; A [Promise] with **resolve()** and **reject()** exposed as
@@ -60,5 +56,12 @@ and used in the same way):
   &mdash; Simple listeneable data emitter.
 - [Semaphore](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Semaphore)
   &mdash; Synchronization primitive.
-- `Timer` &mdash; The core implementation of [timer] functionality, allowing
+- `Timer` &mdash; The core implementation of [timer()] functionality, allowing
   to create further customized timer objects. _To be documented_.
+
+<!-- References -->
+
+[Barrier]: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
+[Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[timer()]: https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#timer
+[withRetries()]: https://dr.pogodin.studio/docs/react-utils/docs/api/functions/withretries
