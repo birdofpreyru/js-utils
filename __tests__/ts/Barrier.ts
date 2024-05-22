@@ -10,7 +10,8 @@ describe('Base usage', () => {
 
   it('resolves', async () => {
     const barrier = new Barrier();
-    barrier.resolve('OK');
+
+    expect(barrier.resolve('OK')).toBe(barrier);
     expect(barrier.rejected).toBe(false);
     expect(barrier.resolved).toBe(true);
     expect(barrier.settled).toBe(true);
@@ -19,7 +20,7 @@ describe('Base usage', () => {
 
   it('rejects', async () => {
     const barrier = new Barrier();
-    barrier.reject('OK');
+    expect(barrier.reject('OK')).toBe(barrier);
     expect(barrier.rejected).toBe(true);
     expect(barrier.resolved).toBe(false);
     expect(barrier.settled).toBe(true);
