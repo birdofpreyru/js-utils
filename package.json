@@ -10,7 +10,7 @@
     "build": "rimraf build && tsc",
     "jest": "npm run jest:types && npm run jest:logic",
     "jest:logic": "jest --config jest.config.js",
-    "jest:types": "jest --config jest.config-types.js",
+    "jest:types": "tstyche",
     "lint": "eslint . --ext .js,.ts",
     "test": "npm run lint && npm run typecheck && npm run jest",
     "typecheck": "tsc --noEmit && tsc --project __tests__/tsconfig.json"
@@ -46,7 +46,7 @@
     "jest": "^29.7.0",
     "jest-runner-tsd": "^6.0.0",
     "rimraf": "^5.0.7",
-    "tsd-lite": "^0.9.0",
+    "tstyche": "^1.1.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.10.0"
   }

@@ -1,12 +1,16 @@
 /* eslint-disable no-await-in-loop */
 
+import { expect as of } from 'tstyche';
+
+import type * as SrcT from '../../src';
+
 const mockTimer = jest.fn(() => Promise.resolve());
 
 jest.mock('../../src/time', () => ({
   timer: mockTimer,
 }));
 
-const { timer, withRetries } = require('../../src');
+const { timer, withRetries }: typeof SrcT = require('../../src');
 
 jest.useFakeTimers();
 
@@ -51,7 +55,11 @@ it('works correctly with async actions', async () => {
   for (let i = 0; i < 2; ++i) {
     mockTimer.mockClear();
     const action = newAsyncTestAction(i);
-    await expect(withRetries(action)).resolves.toBe(SUCCESS);
+
+    const promise = withRetries(action);
+    of(promise).type.toEqual<Promise<string>>();
+    await expect(promise).resolves.toBe(SUCCESS);
+
     expect(action).toHaveBeenCalledTimes(i + 1);
     expect(mockTimer.mock.calls).toMatchSnapshot();
   }
@@ -66,7 +74,11 @@ it('works correctly with sync actions', async () => {
   for (let i = 0; i < 2; ++i) {
     mockTimer.mockClear();
     const action = newSyncTestAction(i);
-    await expect(withRetries(action)).resolves.toBe(SUCCESS);
+
+    const promise = withRetries(action);
+    of(promise).type.toEqual<Promise<string>>();
+    await expect(promise).resolves.toBe(SUCCESS);
+
     expect(action).toHaveBeenCalledTimes(i + 1);
     expect(mockTimer.mock.calls).toMatchSnapshot();
   }
