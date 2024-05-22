@@ -1,4 +1,8 @@
-import { Emitter } from '../../src/Emitter';
+import { expect as ts } from 'tstyche';
+
+import { type Listener, Emitter } from '../../src';
+
+ts<Listener>().type.toBeAssignable<() => {}>();
 
 describe('constructor()', () => {
   it('creates a new emitter with empty listeners array', () => {
