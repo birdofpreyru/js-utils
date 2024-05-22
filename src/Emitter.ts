@@ -1,9 +1,9 @@
-type Listener<T extends unknown[] = unknown[]> = (...args: T) => void;
+export type Listener<T extends unknown[] = unknown[]> = (...args: T) => void;
 
 /**
  * Simple listeneable data Emitter.
  */
-export default class Emitter<T extends unknown[] = unknown[]> {
+export class Emitter<T extends unknown[] = unknown[]> {
   private p_listeners: Listener<T>[] = [];
 
   /**
