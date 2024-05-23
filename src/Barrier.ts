@@ -1,5 +1,5 @@
-type Resolver<T, TR = T> = (value: T | PromiseLike<T>) => Barrier<T, TR>;
-type Rejecter<T = unknown, TR = T> = (reason?: any) => Barrier<T, TR>;
+type Resolver<T> = (value: T | PromiseLike<T>) => void;
+type Rejecter = (reason?: any) => void;
 export type Executor<T> = (resolve: Resolver<T>, reject: Rejecter) => void;
 
 enum STATE {
@@ -29,12 +29,10 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
       resolveRef = (value: TR | PromiseLike<TR>) => {
         resolve(value);
         this.p_state = STATE.RESOLVED;
-        return this;
       };
       rejectRef = (reason?: any) => {
         reject(reason);
         this.p_state = STATE.REJECTED;
-        return this;
       };
       if (executor) executor(resolveRef, rejectRef);
     });
