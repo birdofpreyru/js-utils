@@ -1,6 +1,6 @@
 import { expect as ts } from 'tstyche';
 
-import { type Listener, Emitter } from '../../src';
+import { type Listener, Emitter } from '../src';
 
 ts<Listener>().type.toBeAssignable<() => {}>();
 

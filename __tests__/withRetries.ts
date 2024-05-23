@@ -2,15 +2,15 @@
 
 import { expect as of } from 'tstyche';
 
-import type * as SrcT from '../../src';
+import type * as SrcT from '../src';
 
 const mockTimer = jest.fn(() => Promise.resolve());
 
-jest.mock('../../src/time', () => ({
+jest.mock('../src/time', () => ({
   timer: mockTimer,
 }));
 
-const { timer, withRetries }: typeof SrcT = require('../../src');
+const { timer, withRetries }: typeof SrcT = require('../src');
 
 jest.useFakeTimers();
 

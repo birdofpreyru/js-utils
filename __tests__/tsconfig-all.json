@@ -1,9 +1,0 @@
-// ESLint in this folder wants TS config including all linted files.
-// TODO: Perhaps it should be done differently.
-{
-  "extends": "@tsconfig/recommended",
-  "include": ["**/*"],
-  "compilerOptions": {
-    "noEmit": true
-  }
-}

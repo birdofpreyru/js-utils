@@ -1,4 +1,4 @@
-import Barrier from '../../src/Barrier';
+import Barrier from '../src/Barrier';
 
 describe('Base usage', () => {
   test('initial values of barrier properties are correct', () => {
@@ -24,6 +24,11 @@ describe('Base usage', () => {
     expect(barrier.resolved).toBe(false);
     expect(barrier.settled).toBe(true);
     await expect(barrier).rejects.toBe('OK');
+  });
+
+  test('await barrier.resolve() is safe', async () => {
+    const barrier = new Barrier();
+    await barrier.resolve(null);
   });
 });
 
