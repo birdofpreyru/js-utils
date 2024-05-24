@@ -17,6 +17,11 @@ describe('Base usage', () => {
     await expect(barrier).resolves.toBe('OK');
   });
 
+  test('resolve() chaining', async () => {
+    const barrier = new Barrier<string>();
+    await expect(barrier.resolve('OK')).resolves.toBe('OK');
+  });
+
   it('rejects', async () => {
     const barrier = new Barrier();
     barrier.reject('OK');
@@ -26,9 +31,14 @@ describe('Base usage', () => {
     await expect(barrier).rejects.toBe('OK');
   });
 
-  test('await barrier.resolve() is safe', async () => {
-    const barrier = new Barrier();
-    await barrier.resolve(null);
+  test('Barrier supports promise-like executor', async () => {
+    const barrier = new Barrier((done) => done('OK'));
+    await expect(barrier).resolves.toBe('OK');
+  });
+
+  test('reject() chaining', async () => {
+    const barrier = new Barrier<string>();
+    await expect(barrier.reject(Error('FAIL'))).rejects.toThrow('FAIL');
   });
 });
 
@@ -47,9 +57,27 @@ describe('.then()', () => {
   });
 
   it('returns a barrier reusing the same resolve/reject', async () => {
-    const barrier = (new Barrier()).then(() => 'OK');
-    barrier.resolve('NO');
-    await expect(barrier).resolves.toBe('OK');
+    const root = new Barrier();
+    const child = root.then(() => 'OK');
+    child.resolve('NO');
+    await expect(root).resolves.toBe('NO');
+    await expect(child).resolves.toBe('OK');
+  });
+
+  it('.then() correctly substiutes types', async () => {
+    {
+      const root = new Barrier<string>();
+      const child = root.then((s) => s.length);
+      child.resolve('result');
+      await expect(child).resolves.toBe(6);
+    }
+
+    { // Alternative resolution call.
+      const root = new Barrier<string>();
+      const child = root.then((s) => s.length);
+      root.resolve('result');
+      await expect(child).resolves.toBe(6);
+    }
   });
 });
 

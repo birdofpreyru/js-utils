@@ -1,6 +1,6 @@
 {
   "name": "@dr.pogodin/js-utils",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Collection of JavaScript (TypeScript) utilities.",
   "main": "build/index",
   "react-native": "src/index",
@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/birdofpreyru/js-utils#readme",
   "devDependencies": {
-    "@babel/core": "^7.24.5",
-    "@babel/preset-env": "^7.24.5",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@babel/preset-typescript": "^7.24.6",
     "@tsconfig/recommended": "^1.0.6",
     "@types/jest": "^29.5.12",
     "babel-jest": "^29.7.0",
