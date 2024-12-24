@@ -57,7 +57,7 @@ it('works correctly with async actions', async () => {
     const action = newAsyncTestAction(i);
 
     const promise = withRetries(action);
-    of(promise).type.toEqual<Promise<string>>();
+    of(promise).type.toBe<Promise<string>>();
     await expect(promise).resolves.toBe(SUCCESS);
 
     expect(action).toHaveBeenCalledTimes(i + 1);
@@ -76,7 +76,7 @@ it('works correctly with sync actions', async () => {
     const action = newSyncTestAction(i);
 
     const promise = withRetries(action);
-    of(promise).type.toEqual<Promise<string>>();
+    of(promise).type.toBe<Promise<string>>();
     await expect(promise).resolves.toBe(SUCCESS);
 
     expect(action).toHaveBeenCalledTimes(i + 1);

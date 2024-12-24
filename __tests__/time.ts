@@ -11,19 +11,19 @@ import {
 
 test('Misc aliases', () => {
   expect(SEC_MS).toBe(1000);
-  of(SEC_MS).type.toEqual<1000>();
+  of(SEC_MS).type.toBe<1000>();
 
   expect(MIN_MS).toBe(60 * SEC_MS);
-  of(MIN_MS).type.toEqual<60000>();
+  of(MIN_MS).type.toBe<60000>();
 
   expect(HOUR_MS).toBe(60 * MIN_MS);
-  of(HOUR_MS).type.toEqual<3600000>();
+  of(HOUR_MS).type.toBe<3600000>();
 
   expect(DAY_MS).toBe(24 * HOUR_MS);
-  of(DAY_MS).type.toEqual<86400000>();
+  of(DAY_MS).type.toBe<86400000>();
 
   expect(YEAR_MS).toBe(365 * DAY_MS);
-  of(YEAR_MS).type.toEqual<31536000000>();
+  of(YEAR_MS).type.toBe<31536000000>();
 });
 
 describe('timer()', () => {
