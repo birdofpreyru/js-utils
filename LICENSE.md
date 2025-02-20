@@ -1,7 +1,7 @@
 # MIT License
 
-_Copyright &copy; 2023, Dr. Sergey Pogodin_
-  &mdash; <doc@pogodin.studio> (https://dr.pogodin.studio) \
+_Copyright &copy; 2023&ndash;2025, Dr. Sergey Pogodin_
+  &mdash; <doc@pogodin.studio> (https://dr.pogodin.studio)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
