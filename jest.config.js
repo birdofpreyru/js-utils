@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   collectCoverage: true,
   coverageDirectory: '__coverage__',
   testPathIgnorePatterns: [
