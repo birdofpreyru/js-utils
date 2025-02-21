@@ -50,7 +50,7 @@ export default class Semaphore {
     this.p_draining = true;
     while (this.p_ready && this.p_queue.length) {
       this.p_drainLock = new Barrier();
-      this.p_queue[0].resolve();
+      this.p_queue[0]!.resolve();
       await this.p_drainLock; // eslint-disable-line no-await-in-loop
       this.p_queue.shift();
     }

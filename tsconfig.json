@@ -1,9 +1,10 @@
 {
   "extends": "@tsconfig/recommended",
-  "include": ["src/**/*"],
+  "include": ["src"],
   "compilerOptions": {
-    "declaration": true,
     "module": "Preserve",
-    "outDir": "build"
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true
   }
 }

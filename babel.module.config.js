@@ -3,7 +3,7 @@
 export default {
   presets: [
     ['./config/babel/preset', {
-      modules: 'cjs',
+      modules: false,
       targets: 'defaults',
     }],
   ],
