@@ -1,10 +1,9 @@
 {
   "name": "@dr.pogodin/js-utils",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Collection of JavaScript (TypeScript) utilities.",
   "main": "build/common/index.js",
   "module": "build/module/index.js",
-  "type": "module",
   "types": "./build/types/index.d.ts",
   "exports": {
     "types": "./build/types/index.d.ts",
