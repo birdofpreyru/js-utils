@@ -16,7 +16,6 @@ export default async function withRetries<T>(
   maxRetries = 3,
   interval = 300,
 ): Promise<Awaited<T>> {
-  /* eslint-disable no-await-in-loop */
   for (let n = 1; ; ++n) {
     try {
       const res = action();
@@ -26,5 +25,4 @@ export default async function withRetries<T>(
       else throw error;
     }
   }
-  /* eslint-enable no-await-in-loop */
 }

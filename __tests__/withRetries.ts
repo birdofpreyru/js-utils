@@ -1,16 +1,16 @@
-/* eslint-disable no-await-in-loop */
-
 import { expect as of } from 'tstyche';
 
-import type * as SrcT from '../src';
+import type * as SrcNS from '../src';
+import type * as TimeNS from '../src/time';
 
-const mockTimer = jest.fn(() => Promise.resolve());
+const mockTimer = jest.fn(async () => Promise.resolve());
 
-jest.mock('../src/time', () => ({
+jest.mock<typeof TimeNS>('../src/time', () => ({
   timer: mockTimer,
-}));
+} as unknown as typeof TimeNS));
 
-const { timer, withRetries }: typeof SrcT = require('../src');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { timer, withRetries }: typeof SrcNS = require('../src') as typeof SrcNS;
 
 jest.useFakeTimers();
 
@@ -37,11 +37,17 @@ function newSyncTestAction(numFailures: number) {
 it('works as expected in a basic scenario', async () => {
   let n = 1;
   const action = jest.fn(() => {
+    // TODO: Revise.
+    // eslint-disable-next-line jest/no-conditional-in-test
     if (n++ < 2) throw Error('fail');
     return 'success';
   });
   const res = await withRetries(action);
   expect(res).toBe('success');
+
+  // TODO: Revise later - as done now, it does not strict equal, but it works
+  // correctly.
+  // eslint-disable-next-line jest/prefer-strict-equal
   expect(action.mock.results).toEqual([{
     type: 'throw',
     value: Error('fail'),

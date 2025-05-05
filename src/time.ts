@@ -14,13 +14,17 @@ export const YEAR_MS = 31536000000; // 365 * DAY_MS
 // TypeScript typing for timer() function, it makes sense to expose the class
 // from the library as well, and it should be documented later.
 export class Timer<T> extends Barrier<void, T> {
-  private p_abort: () => void;
+  private pAbort: () => void;
 
-  private p_timeout?: number;
+  private pTimeout?: number;
 
-  get abort(): () => void { return this.p_abort; }
+  get abort(): () => void {
+    return this.pAbort;
+  }
 
-  get timeout(): number | undefined { return this.p_timeout; }
+  get timeout(): number | undefined {
+    return this.pTimeout;
+  }
 
   /**
    * Creates a new, non-initialized instance of Timer. Call .init() method
@@ -37,29 +41,38 @@ export class Timer<T> extends Barrier<void, T> {
    */
   constructor(executor?: Executor<T>) {
     super(executor);
-    this.p_abort = () => {};
+    this.pAbort = () => undefined;
   }
 
-  init(timeout: number): Timer<T> {
-    if (this.p_timeout !== undefined) {
+  init(timeout: number): this {
+    if (this.pTimeout !== undefined) {
       throw Error('This Timer is initialized already');
     }
-    this.p_timeout = timeout;
+    this.pTimeout = timeout;
     if (timeout > 0) {
-      const id = setTimeout(super.resolve.bind(this), timeout);
-      this.p_abort = () => clearTimeout(id);
+      const id = setTimeout(() => {
+        void super.resolve();
+      }, timeout);
+      this.pAbort = () => {
+        clearTimeout(id);
+      };
     } else {
-      super.resolve();
+      void super.resolve();
     }
     return this;
   }
 
+  // TODO: For async functions TS requires the return type to be the global
+  // Promise, thus not allowing to return our Timer type extending that via
+  // Barrier. Thus, we don't mark this method async for now, disabling the rule,
+  // and we should think more about it in future.
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
   then<TR1, TR2>(
     onFulfilled?: ((value: T) => TR1 | PromiseLike<TR1>) | null,
-    onRejected?: ((reason: any) => TR2 | PromiseLike<TR2>) | null,
+    onRejected?: ((reason: unknown) => TR2 | PromiseLike<TR2>) | null,
   ): Timer<TR1 | TR2> {
-    const res = <Timer<TR1 | TR2>> super.then(onFulfilled, onRejected);
-    if (this.timeout !== undefined) res.init(this.timeout);
+    const res = super.then(onFulfilled, onRejected) as Timer<TR1 | TR2>;
+    if (this.timeout !== undefined) void res.init(this.timeout);
     return res;
   }
 }
@@ -71,6 +84,11 @@ export class Timer<T> extends Barrier<void, T> {
  *  .abort() method attached, which cancels the pending timer resolution
  *  (without resolving or rejecting the barrier).
  */
+// TODO: For async functions TS requires the return type to be the global
+// Promise, thus not allowing to return our Timer type extending that via
+// Barrier. Thus, we don't mark this method async for now, disabling the rule,
+// and we should think more about it in future.
+// eslint-disable-next-line @typescript-eslint/promise-function-async
 export function timer(timeout: number): Timer<void> {
   const t = new Timer<void>();
   return t.init(timeout);

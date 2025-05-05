@@ -33,11 +33,11 @@ enum STATE {
  * Docs: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
  */
 export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
-  private p_resolve: Resolver<T>;
+  private pResolve: Resolver<T>;
 
-  private p_reject: Rejecter;
+  private pReject: Rejecter;
 
-  private p_state = STATE.PENDING;
+  private pState = STATE.PENDING;
 
   constructor(executor?: Executor<TR>) {
     let resolveRef: Resolver<TR>;
@@ -47,7 +47,7 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
       // Note: Enforcing `void` return type because of the BEWARE note below.
       resolveRef = (value: TR | PromiseLike<TR>): void => {
         resolve(value);
-        this.p_state = STATE.RESOLVED;
+        this.pState = STATE.RESOLVED;
 
         // BEWARE: Don't try to return `this` here, it will easily cause
         // infinite loops in React Native, which are extremely difficult
@@ -57,9 +57,9 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
       };
 
       // Note: Enforcing `void` return type because of the BEWARE note below.
-      rejectRef = (reason?: any): void => {
+      rejectRef = (reason?: unknown): void => {
         reject(reason);
-        this.p_state = STATE.REJECTED;
+        this.pState = STATE.REJECTED;
       };
 
       if (executor) executor(resolveRef, rejectRef);
@@ -69,48 +69,73 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
     // the Barrier is constructed by a .then() call on a "parent" barrier,
     // and in that scenario .then() itself will replace .p_resolve by another
     // resolver immediately after this constructor returns.
-    this.p_resolve = resolveRef! as Resolver<T>;
+    this.pResolve = resolveRef! as Resolver<T>;
 
-    this.p_reject = rejectRef!;
+    this.pReject = rejectRef!;
   }
 
   get resolve() {
-    return (arg: Parameters<Resolver<T>>[0]) => {
-      this.p_resolve(arg);
+    return (arg: Parameters<Resolver<T>>[0]): this => {
+      this.pResolve(arg);
       return this;
     };
   }
 
   get reject() {
-    return (arg: Parameters<Rejecter>[0]) => {
-      this.p_reject(arg);
+    return (arg: Parameters<Rejecter>[0]): this => {
+      this.pReject(arg);
       return this;
     };
   }
 
-  get resolved() { return this.p_state === STATE.RESOLVED; }
+  get resolved(): boolean {
+    return this.pState === STATE.RESOLVED;
+  }
 
-  get rejected() { return this.p_state === STATE.REJECTED; }
+  get rejected(): boolean {
+    return this.pState === STATE.REJECTED;
+  }
 
-  get settled() { return this.p_state !== STATE.PENDING; }
+  get settled(): boolean {
+    return this.pState !== STATE.PENDING;
+  }
 
+  // TODO: For async functions TS requires the return type to be the global
+  // Promise, thus not allowing to return our Barrier type extending it.
+  // Thus, we don't mark this method async for now, disabling the rule,
+  // and we should think more about it in future.
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
   catch<TR1>(
-    onRejected?: ((reason: any) => TR1 | PromiseLike<TR1>) | null,
+    onRejected?: ((reason: unknown) => TR1 | PromiseLike<TR1>) | null,
   ): Barrier<T, TR1> {
-    return <Barrier<T, TR1>> super.catch(onRejected);
+    return super.catch(onRejected) as Barrier<T, TR1>;
   }
 
+  // TODO: For async functions TS requires the return type to be the global
+  // Promise, thus not allowing to return our Barrier type extending it.
+  // Thus, we don't mark this method async for now, disabling the rule,
+  // and we should think more about it in future.
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
   finally(onFinally?: (() => void) | null): Barrier<TR> {
-    return <Barrier<TR>> super.finally(onFinally);
+    return super.finally(onFinally) as Barrier<TR>;
   }
 
+  // TODO: For async functions TS requires the return type to be the global
+  // Promise, thus not allowing to return our Barrier type extending it.
+  // Thus, we don't mark this method async for now, disabling the rule,
+  // and we should think more about it in future.
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
   then<TR1, TR2>(
     onFulfilled?: ((value: TR) => TR1 | PromiseLike<TR1>) | null,
-    onRejected?: ((reason: any) => TR2 | PromiseLike<TR2>) | null,
+    onRejected?: ((reason: unknown) => TR2 | PromiseLike<TR2>) | null,
   ): Barrier<T, TR1 | TR2> {
-    const res = <Barrier<T, TR1 | TR2>> super.then(onFulfilled, onRejected);
-    res.p_resolve = this.resolve;
-    res.p_reject = this.reject;
+    const res = super.then(onFulfilled, onRejected) as Barrier<T, TR1 | TR2>;
+    // TODO: Revise later.
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    res.pResolve = this.resolve;
+    // TODO: Revise later.
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    res.pReject = this.reject;
     return res;
   }
 }

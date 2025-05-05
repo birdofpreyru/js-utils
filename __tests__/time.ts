@@ -33,7 +33,7 @@ describe('timer()', () => {
     await t;
     const after = Date.now();
     expect(t.timeout).toBe(500);
-    expect(after - before >= 500).toBe(true);
+    expect(after - before).toBeGreaterThanOrEqual(500);
   });
 
   test('.then()', async () => {
@@ -42,7 +42,7 @@ describe('timer()', () => {
     await t;
     const dt = Date.now() - before;
     expect(t.timeout).toBe(500);
-    expect(dt >= 500).toBe(true);
-    expect(dt < 750).toBe(true);
+    expect(dt).toBeGreaterThanOrEqual(500);
+    expect(dt).toBeLessThan(750);
   });
 });

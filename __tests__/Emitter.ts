@@ -2,12 +2,12 @@ import { expect as ts } from 'tstyche';
 
 import { type Listener, Emitter } from '../src';
 
-ts<Listener>().type.toBeAssignableWith<() => {}>();
+ts<Listener>().type.toBeAssignableWith<() => void>();
 
 describe('constructor()', () => {
   it('creates a new emitter with empty listeners array', () => {
     const e = new Emitter();
-    expect(e.listeners).toEqual([]);
+    expect(e.listeners).toStrictEqual([]);
   });
 });
 

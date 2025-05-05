@@ -10,7 +10,7 @@ describe('Base usage', () => {
 
   it('resolves', async () => {
     const barrier = new Barrier();
-    barrier.resolve('OK');
+    void barrier.resolve('OK');
     expect(barrier.rejected).toBe(false);
     expect(barrier.resolved).toBe(true);
     expect(barrier.settled).toBe(true);
@@ -24,7 +24,7 @@ describe('Base usage', () => {
 
   it('rejects', async () => {
     const barrier = new Barrier();
-    barrier.reject('OK');
+    void barrier.reject('OK'); // eslint-disable-line @typescript-eslint/prefer-promise-reject-errors
     expect(barrier.rejected).toBe(true);
     expect(barrier.resolved).toBe(false);
     expect(barrier.settled).toBe(true);
@@ -32,7 +32,9 @@ describe('Base usage', () => {
   });
 
   test('Barrier supports promise-like executor', async () => {
-    const barrier = new Barrier((done) => done('OK'));
+    const barrier = new Barrier((done) => {
+      done('OK');
+    });
     await expect(barrier).resolves.toBe('OK');
   });
 
@@ -45,21 +47,23 @@ describe('Base usage', () => {
 describe('.then()', () => {
   it('resolves if called after the barrier resolution', async () => {
     const barrier = new Barrier();
-    barrier.resolve('NO');
+    void barrier.resolve('NO');
     await expect(barrier.then(() => 'OK')).resolves.toBe('OK');
   });
 
   it('resolves if used before the barrier resolution', async () => {
     const barrier = new Barrier();
+    // eslint-disable-next-line jest/valid-expect
     const test = expect(barrier.then(() => 'OK')).resolves.toBe('OK');
-    barrier.resolve('NO');
+    void barrier.resolve('NO');
+
     await test;
   });
 
   it('returns a barrier reusing the same resolve/reject', async () => {
     const root = new Barrier();
     const child = root.then(() => 'OK');
-    child.resolve('NO');
+    void child.resolve('NO');
     await expect(root).resolves.toBe('NO');
     await expect(child).resolves.toBe('OK');
   });
@@ -68,14 +72,14 @@ describe('.then()', () => {
     {
       const root = new Barrier<string>();
       const child = root.then((s) => s.length);
-      child.resolve('result');
+      void child.resolve('result');
       await expect(child).resolves.toBe(6);
     }
 
     { // Alternative resolution call.
       const root = new Barrier<string>();
       const child = root.then((s) => s.length);
-      root.resolve('result');
+      void root.resolve('result');
       await expect(child).resolves.toBe(6);
     }
   });
@@ -83,22 +87,30 @@ describe('.then()', () => {
 
 describe('.catch()', () => {
   it('rejects correctly when chained', async () => {
-    const barrier = (new Barrier()).catch(() => { throw Error('ERROR'); });
-    barrier.reject('OGH');
+    const barrier = new Barrier().catch(() => {
+      throw Error('ERROR');
+    });
+    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+    void barrier.reject('OGH');
     await expect(barrier).rejects.toThrow('ERROR');
   });
 });
 
 describe('.finally()', () => {
   it('works as expected when chained (I)', async () => {
-    const barrier = (new Barrier()).finally(() => { throw Error('ERROR'); });
-    barrier.resolve('OK');
+    const barrier = new Barrier().finally(() => {
+      throw Error('ERROR');
+    });
+    void barrier.resolve('OK');
     await expect(barrier).rejects.toThrow('ERROR');
   });
 
   it('works as expected when chained (II)', async () => {
-    const barrier = (new Barrier()).finally(() => { throw Error('ERROR'); });
-    barrier.reject('OGH');
+    const barrier = new Barrier().finally(() => {
+      throw Error('ERROR');
+    });
+    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+    void barrier.reject('OGH');
     await expect(barrier).rejects.toThrow('ERROR');
   });
 });
