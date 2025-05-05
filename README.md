@@ -59,6 +59,13 @@ and used in the same way):
 - `Timer` &mdash; The core implementation of [timer()] functionality, allowing
   to create further customized timer objects. _To be documented_.
 
+---
+Repository of this library also hosts some documents, to be referenced from
+other projects, as needed:
+- [The Common Sense Versioning](./docs/common-sense-versioning.md) &mdash;
+  a lax description of a lax approach to product versioning that makes more
+  sense than [SemVer](https://semver.org).
+
 <!-- References -->
 
 [Barrier]: https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Barrier
