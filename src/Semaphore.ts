@@ -5,6 +5,9 @@ import Barrier from './Barrier';
  */
 export default class Semaphore {
   constructor(ready = false) {
+    // TODO: Boolean conversion is performed for backward compatibility with
+    // plain JS projects. Drop it in future.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
     this.pReady = !!ready;
   }
 
@@ -13,6 +16,9 @@ export default class Semaphore {
   }
 
   setReady(ready: boolean): void {
+    // TODO: Boolean conversion is performed for backward compatibility with
+    // plain JS projects. Drop it in future.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
     const bool = !!ready;
     if (this.pReady !== bool) {
       this.pReady = bool;
