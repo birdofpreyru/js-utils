@@ -1,14 +1,14 @@
 {
   "name": "@dr.pogodin/js-utils",
-  "version": "0.0.19",
+  "version": "0.1.0",
   "description": "Collection of JavaScript (TypeScript) utilities.",
   "main": "build/common/index.js",
   "module": "build/module/index.js",
   "types": "./build/types/index.d.ts",
   "exports": {
+    "require": "./build/common/index.js",
     "types": "./build/types/index.d.ts",
-    "import": "./build/module/index.js",
-    "default": "./build/common/index.js"
+    "default": "./build/module/index.js"
   },
   "scripts": {
     "build": "rimraf build && npm run build:common && npm run build:module && npm run build:types",
