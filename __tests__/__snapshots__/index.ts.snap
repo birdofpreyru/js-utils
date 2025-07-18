@@ -1,8 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`exports expected definitions 1`] = `
 {
   "Barrier": [Function],
+  "Cached": [Function],
   "DAY_MS": 86400000,
   "Emitter": [Function],
   "HOUR_MS": 3600000,

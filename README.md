@@ -52,6 +52,10 @@ and used in the same way):
 ### Classes
 - [Barrier] &mdash; A [Promise] with **resolve()** and **reject()** exposed as
   instance methods.
+
+- `Cached` &mdash; Implements a cache of (a)synchronously retrieved items with
+  timestamp-based expiration. _To be documented_.
+
 - [Emitter](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Emitter)
   &mdash; Simple listeneable data emitter.
 - [Semaphore](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Semaphore)
