@@ -12,6 +12,7 @@ exports[`exports expected definitions 1`] = `
   "Semaphore": [Function],
   "Timer": [Function],
   "YEAR_MS": 31536000000,
+  "assertEmptyObject": [Function],
   "timer": [Function],
   "withRetries": [Function],
 }

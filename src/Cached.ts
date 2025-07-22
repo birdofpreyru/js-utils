@@ -18,17 +18,17 @@ function getTimestamp<T>(e: EntryT<T>): number {
 }
 
 export class Cached<T> {
-  private data: Record<string, EntryT<T>> = {};
-  private oldestTimestamp = Number.MAX_SAFE_INTEGER;
+  private pData: Record<string, EntryT<T>> = {};
+  private pOldestTimestamp = Number.MAX_SAFE_INTEGER;
 
   /** For test use only. */
-  get _data(): Readonly<Record<string, EntryT<T>>> {
-    return this.data;
+  get data(): Readonly<Record<string, EntryT<T>>> {
+    return this.pData;
   }
 
   /** For test use only. */
-  get _oldestTimestamp(): number {
-    return this.oldestTimestamp;
+  get oldestTimestamp(): number {
+    return this.pOldestTimestamp;
   }
 
   constructor(
@@ -39,23 +39,33 @@ export class Cached<T> {
   /** Removes stale items from the cache, and updates .oldestTimestamp. */
   private cleanCache() {
     const deadline = Date.now() - this.maxage;
-    this.oldestTimestamp = Number.MAX_SAFE_INTEGER;
-    for (const [key, entry] of Object.entries(this.data)) {
+    this.pOldestTimestamp = Number.MAX_SAFE_INTEGER;
+    for (const [key, entry] of Object.entries(this.pData)) {
       const timestamp = getTimestamp(entry);
-      if (timestamp < deadline) delete this.data[key];
-      else if (timestamp < this.oldestTimestamp) {
-        this.oldestTimestamp = timestamp;
+      if (timestamp < deadline) delete this.pData[key];
+      else if (timestamp < this.pOldestTimestamp) {
+        this.pOldestTimestamp = timestamp;
       }
     }
   }
 
+  /**
+   * Adds entry to the cache.
+   * NOTE: It assumes entry's timestamp is the current moment (for the cache
+   * cleaning purposes; if it is not, but it is a past timestamp, nothing bad
+   * will happen, just some cleaning operation will be skipped).
+   */
+  private setEntry(id: string, entry: EntryT<T>) {
+    this.pData[id] = entry;
+    const timestamp = getTimestamp(entry);
+    if (timestamp < this.pOldestTimestamp) this.pOldestTimestamp = timestamp;
+    else if (this.pOldestTimestamp < timestamp - this.maxage) this.cleanCache();
+  }
+
   /** Adds `datum` to the cache, and removes stale items from the cache. */
   private set(id: string, datum: T): CachedT<T> {
-    const now = Date.now();
-    if (this.oldestTimestamp < now - this.maxage) this.cleanCache();
-    if (now < this.oldestTimestamp) this.oldestTimestamp = now;
-    const res: CachedT<T> = [datum, now];
-    this.data[id] = res;
+    const res: CachedT<T> = [datum, Date.now()];
+    this.setEntry(id, res);
     return res;
   }
 
@@ -67,7 +77,7 @@ export class Cached<T> {
     const now = Date.now();
 
     if (!forceRefresh) {
-      const cached = this.data[id];
+      const cached = this.pData[id];
       if (cached && getTimestamp(cached) >= now - this.maxage) return cached;
     }
 
@@ -76,13 +86,14 @@ export class Cached<T> {
       return this.set(id, itemOrPromise);
     }
 
-    const cached = addTimestamp(
+    const promise = addTimestamp(
       itemOrPromise.then((item) => this.set(id, item)),
       now,
     );
-    if (now < this.oldestTimestamp) this.oldestTimestamp = now;
-    this.data[id] = cached;
-    return cached;
+
+    this.setEntry(id, promise);
+
+    return promise;
   }
 
   /** Gets item. */

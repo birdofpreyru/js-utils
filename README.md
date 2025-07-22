@@ -45,7 +45,13 @@ and used in the same way):
 - [YEAR_MS](https://dr.pogodin.studio/docs/react-utils/docs/api/utils/time#year_ms)
   &mdash; One year expressed in milliseconds.
 
+### Types
+- `ObjectKey` &mdash; **string** | **number** | **symbol** &mdash;
+  The most generic valid type of an object key in TypeScript.
+
 ### Functions
+- `assertEmptyObject()` &mdash; Asserts given object is empty,
+  both compile- and run-time.
 - [timer()] &mdash; Creates a [Barrier] which resolves after the specified timeout.
 - [withRetries()] &mdash; Attempts a given action multiple times until its succeeds.
 
@@ -53,8 +59,9 @@ and used in the same way):
 - [Barrier] &mdash; A [Promise] with **resolve()** and **reject()** exposed as
   instance methods.
 
-- `Cached` &mdash; Implements a cache of (a)synchronously retrieved items with
-  timestamp-based expiration. _To be documented_.
+- [Cached](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Cached)
+  &mdash; A cache of (a)synchronously retrieved items with timestamp-based
+  expiration.
 
 - [Emitter](https://dr.pogodin.studio/docs/react-utils/docs/api/classes/Emitter)
   &mdash; Simple listeneable data emitter.
