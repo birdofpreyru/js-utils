@@ -59,20 +59,24 @@ export class Cached<T> {
     return res;
   }
 
-  /** Retrieves envelope of the specified datum, either read from the cache,
-   *  or retrieved using the getter provided at construction time. */
-  private getEntry(id: string): EntryT<T> {
+  /**
+   * Retrieves envelope of the specified datum, either read from the cache,
+   * or retrieved using the getter provided at construction time.
+   */
+  private getEntry(id: string, forceRefresh?: boolean): EntryT<T> {
     const now = Date.now();
 
-    let cached = this.data[id];
-    if (cached && getTimestamp(cached) >= now - this.maxage) return cached;
+    if (!forceRefresh) {
+      const cached = this.data[id];
+      if (cached && getTimestamp(cached) >= now - this.maxage) return cached;
+    }
 
     const itemOrPromise = this.getter(id);
     if (!(itemOrPromise instanceof Promise)) {
       return this.set(id, itemOrPromise);
     }
 
-    cached = addTimestamp(
+    const cached = addTimestamp(
       itemOrPromise.then((item) => this.set(id, item)),
       now,
     );
@@ -82,8 +86,8 @@ export class Cached<T> {
   }
 
   /** Gets item. */
-  get(id: string): T | Promise<T> {
-    const entry = this.getEntry(id);
+  get(id: string, forceRefresh?: boolean): T | Promise<T> {
+    const entry = this.getEntry(id, forceRefresh);
     return Array.isArray(entry) ? entry[0] : entry.then((e) => e[0]);
   }
 }
