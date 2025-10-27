@@ -2,7 +2,7 @@ import { expect as ts } from 'tstyche';
 
 import { type Listener, Emitter } from '../src';
 
-ts<Listener>().type.toBeAssignableWith<() => void>();
+ts<Listener>().type.toBeAssignableFrom<() => void>();
 
 describe('constructor()', () => {
   it('creates a new emitter with empty listeners array', () => {
