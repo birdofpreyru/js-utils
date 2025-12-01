@@ -46,6 +46,12 @@ and used in the same way):
   &mdash; One year expressed in milliseconds.
 
 ### Types
+- `Extends<Base, T extends Base>` &mdash; Validates compile-time the type **T**
+  extends (is assignable to) the type **Base**; returns **T** if successful.
+- `Implements<Base, T extends Base & ...>` &mdash; Validates compile-time
+  the type **T** extends (is assignable to) the type **Base**, and also has
+  all (if any) optional fields defined in the **Base**; returns **T** if
+  the validation passes.
 - `ObjectKey` &mdash; **string** | **number** | **symbol** &mdash;
   The most generic valid type of an object key in TypeScript.
 
