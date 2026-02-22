@@ -1,6 +1,6 @@
 type CachedT<T> = [T, number];
-type TimestampedPromise<T> = Promise<T> & { timestamp: number };
 type EntryT<T> = CachedT<T> | TimestampedPromise<CachedT<T>>;
+type TimestampedPromise<T> = Promise<T> & { timestamp: number };
 
 /** Adds timestamp to the promise. */
 function addTimestamp<T>(
@@ -33,7 +33,7 @@ export class Cached<T> {
 
   constructor(
     public readonly maxage: number,
-    private getter: (id: string) => T | Promise<T>,
+    private getter: (id: string) => Promise<T> | T,
   ) {}
 
   /** Removes stale items from the cache, and updates .oldestTimestamp. */
@@ -97,7 +97,7 @@ export class Cached<T> {
   }
 
   /** Gets item. */
-  get(id: string, forceRefresh?: boolean): T | Promise<T> {
+  get(id: string, forceRefresh?: boolean): Promise<T> | T {
     const entry = this.getEntry(id, forceRefresh);
     return Array.isArray(entry) ? entry[0] : entry.then((e) => e[0]);
   }

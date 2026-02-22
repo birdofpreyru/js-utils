@@ -1,7 +1,7 @@
 export type Executor<T> = ConstructorParameters<typeof Promise<T>>[0];
 
-type Resolver<T> = Parameters<Executor<T>>[0];
 type Rejecter = Parameters<Executor<unknown>>[1];
+type Resolver<T> = Parameters<Executor<T>>[0];
 
 enum STATE {
   PENDING = 'PENDING',
@@ -45,7 +45,7 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
 
     super((resolve, reject) => {
       // Note: Enforcing `void` return type because of the BEWARE note below.
-      resolveRef = (value: TR | PromiseLike<TR>): void => {
+      resolveRef = (value: PromiseLike<TR> | TR): void => {
         resolve(value);
         this.pState = STATE.RESOLVED;
 
@@ -106,7 +106,7 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
   // and we should think more about it in future.
   // eslint-disable-next-line @typescript-eslint/promise-function-async
   catch<TR1>(
-    onRejected?: ((reason: unknown) => TR1 | PromiseLike<TR1>) | null,
+    onRejected?: ((reason: unknown) => PromiseLike<TR1> | TR1) | null,
   ): Barrier<T, TR1> {
     return super.catch(onRejected) as Barrier<T, TR1>;
   }
@@ -126,15 +126,15 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
   // and we should think more about it in future.
   // eslint-disable-next-line @typescript-eslint/promise-function-async
   then<TR1, TR2>(
-    onFulfilled?: ((value: TR) => TR1 | PromiseLike<TR1>) | null,
-    onRejected?: ((reason: unknown) => TR2 | PromiseLike<TR2>) | null,
+    onFulfilled?: ((value: TR) => PromiseLike<TR1> | TR1) | null,
+    onRejected?: ((reason: unknown) => PromiseLike<TR2> | TR2) | null,
   ): Barrier<T, TR1 | TR2> {
     const res = super.then(onFulfilled, onRejected) as Barrier<T, TR1 | TR2>;
     // TODO: Revise later.
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/strict-void-return
     res.pResolve = this.resolve;
     // TODO: Revise later.
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/strict-void-return
     res.pReject = this.reject;
     return res;
   }

@@ -1,6 +1,5 @@
 {
   "extends": "@tsconfig/recommended",
-  "include": ["src"],
   "compilerOptions": {
     "module": "Preserve",
     "noEmit": true,

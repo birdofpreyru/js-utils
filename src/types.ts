@@ -1,7 +1,7 @@
 // Misc TypeScript-specific utilities.
 
 /** The most permissive object key type. */
-export type ObjectKey = string | number | symbol;
+export type ObjectKey = number | string | symbol;
 
 /** Asserts given object is empty, both compile- and run-time. */
 export function assertEmptyObject(object: Record<ObjectKey, never>): void {

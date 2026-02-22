@@ -18,4 +18,7 @@ test('Implements', () => {
 
   // @ts-expect-error Type '{ b: "B"; }' does not satisfy the constraint 'Required<{ a: "A"; b?: "B" | undefined; }>'.
   t<Implements<{ a: 'A'; b?: 'B' }, { b: 'B' }>>().type.not.toRaiseError();
+
+  type T = { a: 'A'; key?: null | string };
+  t<Implements<T, T>>().type.toBe<T>();
 });

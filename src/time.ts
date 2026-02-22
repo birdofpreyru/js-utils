@@ -68,8 +68,8 @@ export class Timer<T> extends Barrier<void, T> {
   // and we should think more about it in future.
   // eslint-disable-next-line @typescript-eslint/promise-function-async
   then<TR1, TR2>(
-    onFulfilled?: ((value: T) => TR1 | PromiseLike<TR1>) | null,
-    onRejected?: ((reason: unknown) => TR2 | PromiseLike<TR2>) | null,
+    onFulfilled?: ((value: T) => PromiseLike<TR1> | TR1) | null,
+    onRejected?: ((reason: unknown) => PromiseLike<TR2> | TR2) | null,
   ): Timer<TR1 | TR2> {
     const res = super.then(onFulfilled, onRejected) as Timer<TR1 | TR2>;
     if (this.timeout !== undefined) void res.init(this.timeout);
