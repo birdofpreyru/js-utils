@@ -1,6 +1,6 @@
 {
   "name": "@dr.pogodin/js-utils",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Collection of JavaScript (TypeScript) utilities.",
   "main": "./build/module/index.js",
   "module": "./build/module/index.js",
@@ -41,20 +41,20 @@
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
     "@babel/plugin-transform-runtime": "^7.29.0",
-    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-env": "^7.29.5",
     "@babel/preset-typescript": "^7.28.5",
-    "@dr.pogodin/eslint-configs": "^0.2.7",
+    "@dr.pogodin/eslint-configs": "^0.2.13",
     "@tsconfig/recommended": "^1.0.13",
     "@types/jest": "^30.0.0",
-    "babel-jest": "^30.2.0",
+    "babel-jest": "^30.4.1",
     "babel-plugin-add-import-extension": "^1.6.0",
-    "jest": "^30.2.0",
+    "jest": "^30.4.2",
     "mockdate": "^3.0.5",
     "rimraf": "^6.1.3",
-    "tstyche": "^6.2.0",
+    "tstyche": "^7.1.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@babel/runtime": "^7.28.6"
+    "@babel/runtime": "^7.29.2"
   }
 }
