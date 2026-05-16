@@ -3,11 +3,20 @@
 /** The most permissive object key type. */
 export type ObjectKey = number | string | symbol;
 
+type AssertEmptyObjectOptionsT = {
+  noRuntimeCheck?: boolean;
+};
+
 /** Asserts given object is empty, both compile- and run-time. */
-export function assertEmptyObject(object: Record<ObjectKey, never>): void {
-  const keys = Object.keys(object);
-  if (keys.length) {
-    throw Error(`The object is not empty (keys: ${keys.join(', ')})`);
+export function assertEmptyObject(
+  object: Record<ObjectKey, never>,
+  { noRuntimeCheck }: AssertEmptyObjectOptionsT = {},
+): void {
+  if (!noRuntimeCheck) {
+    const keys = Object.keys(object);
+    if (keys.length) {
+      throw Error(`The object is not empty (keys: ${keys.join(', ')})`);
+    }
   }
 }
 
