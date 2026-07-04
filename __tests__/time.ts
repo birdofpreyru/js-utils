@@ -1,5 +1,7 @@
 import { expect as of } from 'tstyche';
 
+import { describe, expect, test } from '@jest/globals';
+
 import {
   DAY_MS,
   HOUR_MS,

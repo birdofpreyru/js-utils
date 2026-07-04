@@ -1,5 +1,7 @@
 import { expect as t } from 'tstyche';
 
+import { test } from '@jest/globals';
+
 import type { Extends, Implements } from '../src/types';
 
 test('Extends', () => {

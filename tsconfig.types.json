@@ -4,8 +4,11 @@
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "module": "Preserve",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "outDir": "build/types",
+    "rootDir": "./src",
+    "types": ["node"],
     "verbatimModuleSyntax": true
   }
 }

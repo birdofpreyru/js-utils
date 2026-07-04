@@ -1,10 +1,12 @@
 // Babel is used for Jest testing.
 
 export default {
+  plugins: [
+    '@babel/transform-runtime',
+    '@dr.pogodin/add-import-extension',
+  ],
   presets: [
-    ['./config/babel/preset', {
-      modules: 'cjs',
-      targets: 'defaults',
-    }],
+    '@babel/env',
+    '@babel/typescript',
   ],
 };

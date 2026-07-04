@@ -1,5 +1,12 @@
 import { expect as ts } from 'tstyche';
 
+import {
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
+
 import { Emitter, type Listener } from '../src';
 
 ts<Listener>().type.toBeAssignableFrom<() => void>();
@@ -19,7 +26,7 @@ describe('.hasListeners', () => {
 
   it('returns "true" when a listener is connected', () => {
     const e = new Emitter();
-    e.addListener(jest.fn<undefined, []>());
+    e.addListener(jest.fn<() => void>());
     expect(e.hasListeners).toBe(true);
   });
 });
@@ -27,8 +34,8 @@ describe('.hasListeners', () => {
 describe('.addListener()', () => {
   it('adds given listeners at most once', () => {
     const e = new Emitter();
-    const fnA = jest.fn<undefined, []>().mockName('A');
-    const fnB = jest.fn<undefined, []>().mockName('B');
+    const fnA = jest.fn<() => void>().mockName('A');
+    const fnB = jest.fn<() => void>().mockName('B');
     e.addListener(fnA);
     expect(e.listeners).toMatchSnapshot();
     e.addListener(fnA);
@@ -41,9 +48,9 @@ describe('.addListener()', () => {
 
   it('removes functional unsubscribe function', () => {
     const e = new Emitter();
-    const fnA = jest.fn<undefined, []>().mockName('A');
-    const fnB = jest.fn<undefined, []>().mockName('B');
-    const fnC = jest.fn<undefined, []>().mockName('C');
+    const fnA = jest.fn<() => void>().mockName('A');
+    const fnB = jest.fn<() => void>().mockName('B');
+    const fnC = jest.fn<() => void>().mockName('C');
     e.addListener(fnA);
     const unB = e.addListener(fnB);
     const unC = e.addListener(fnC);
@@ -60,8 +67,8 @@ describe('.addListener()', () => {
 describe('.emit()', () => {
   it('calls connected listeners with given arguments', () => {
     const e = new Emitter();
-    const fnA = jest.fn<undefined, []>().mockName('A');
-    const fnB = jest.fn<undefined, []>().mockName('B');
+    const fnA = jest.fn<() => void>().mockName('A');
+    const fnB = jest.fn<() => void>().mockName('B');
     e.addListener(fnA);
     e.addListener(fnB);
     e.emit('ARG1', 'arg2');
@@ -75,9 +82,9 @@ describe('.emit()', () => {
 
   it('notifies the listeners connected at the moment of .emit() call', () => {
     const e = new Emitter();
-    const fnB = jest.fn<undefined, []>().mockName('B');
-    const fnC = jest.fn<undefined, []>().mockName('C');
-    const fnA = jest.fn<undefined, []>(() => {
+    const fnB = jest.fn<() => void>().mockName('B');
+    const fnC = jest.fn<() => void>().mockName('C');
+    const fnA = jest.fn<() => void>(() => {
       e.removeListener(fnB);
       e.addListener(fnC);
     }).mockName('A');
@@ -93,9 +100,9 @@ describe('.emit()', () => {
 describe('.removeAllListeners', () => {
   it('removes all connected listeners', () => {
     const e = new Emitter();
-    const fnA = jest.fn<undefined, []>().mockName('A');
-    const fnB = jest.fn<undefined, []>().mockName('B');
-    const fnC = jest.fn<undefined, []>().mockName('C');
+    const fnA = jest.fn<() => void>().mockName('A');
+    const fnB = jest.fn<() => void>().mockName('B');
+    const fnC = jest.fn<() => void>().mockName('C');
     e.addListener(fnA);
     e.addListener(fnB);
     e.addListener(fnC);
@@ -108,10 +115,10 @@ describe('.removeAllListeners', () => {
 describe('.removeListener()', () => {
   it('removes given listener if it is connected', () => {
     const e = new Emitter();
-    const fnA = jest.fn<undefined, []>().mockName('A');
-    const fnB = jest.fn<undefined, []>().mockName('B');
-    const fnC = jest.fn<undefined, []>().mockName('C');
-    const fnD = jest.fn<undefined, []>().mockName('D');
+    const fnA = jest.fn<() => void>().mockName('A');
+    const fnB = jest.fn<() => void>().mockName('B');
+    const fnC = jest.fn<() => void>().mockName('C');
+    const fnD = jest.fn<() => void>().mockName('D');
     e.addListener(fnA);
     e.addListener(fnB);
     e.addListener(fnC);

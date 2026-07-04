@@ -1,3 +1,10 @@
+import {
+  describe,
+  expect,
+  it,
+  test,
+} from '@jest/globals';
+
 import Semaphore from '../src/Semaphore';
 import { timer } from '../src/time';
 

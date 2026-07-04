@@ -1,3 +1,10 @@
+import {
+  describe,
+  expect,
+  it,
+  test,
+} from '@jest/globals';
+
 import Barrier from '../src/Barrier';
 
 describe('Base usage', () => {
@@ -54,10 +61,10 @@ describe('.then()', () => {
   it('resolves if used before the barrier resolution', async () => {
     const barrier = new Barrier();
     // eslint-disable-next-line jest/valid-expect
-    const test = expect(barrier.then(() => 'OK')).resolves.toBe('OK');
+    const promise = expect(barrier.then(() => 'OK')).resolves.toBe('OK');
     void barrier.resolve('NO');
 
-    await test;
+    await promise;
   });
 
   it('returns a barrier reusing the same resolve/reject', async () => {

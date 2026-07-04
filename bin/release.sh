@@ -2,5 +2,5 @@
 
 set -e # Interrupt the deployment if any command fails.
 
-echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+export NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
 npm publish --access public

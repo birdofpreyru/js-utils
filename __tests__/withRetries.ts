@@ -1,5 +1,7 @@
 import { expect as of } from 'tstyche';
 
+import { expect, it, jest } from '@jest/globals';
+
 import type * as SrcNS from '../src';
 import type * as TimeNS from '../src/time';
 

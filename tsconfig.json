@@ -1,9 +1,12 @@
 {
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
-    "module": "Preserve",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
+    "rootDir": ".",
+    "types": ["node"],
     "verbatimModuleSyntax": true
   }
 }

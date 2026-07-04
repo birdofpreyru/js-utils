@@ -1,12 +1,14 @@
 import mockdate from 'mockdate';
 
+import { expect, it, jest } from '@jest/globals';
+
 import { Cached, timer } from '../src';
 
 mockdate.set('2025-07-18Z');
 
 it('passes base test', async () => {
   const timeA1 = Date.now();
-  const getter = jest.fn(async (id) => {
+  const getter = jest.fn(async (id: string) => {
     await timer(100);
     return `item-${id}`;
   });
@@ -59,7 +61,7 @@ it('passes base test', async () => {
 
 it('passes tests for sync getter', () => {
   const timeA = Date.now();
-  const getter = jest.fn((id) => `item-${id}`);
+  const getter = jest.fn((id: string) => `item-${id}`);
   const cached = new Cached(1000, getter);
 
   expect(cached.get('A')).toBe('item-A');
