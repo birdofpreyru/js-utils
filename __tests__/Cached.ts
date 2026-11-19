@@ -38,7 +38,7 @@ it('passes base test', async () => {
   const timeB = Date.now();
   await expect(cached.get('B')).resolves.toBe('item-B');
   expect(getter).toHaveBeenCalledTimes(2);
-  expect(Object.keys(cached.data)).toStrictEqual(['A', 'B']);
+  expect([...cached.data.keys()]).toStrictEqual(['A', 'B']);
 
   // Now the oldest timestamp equals to the resolution of the first promise
   // for A item.
@@ -47,7 +47,7 @@ it('passes base test', async () => {
   mockdate.set(timeB + 1000);
   await expect(cached.get('A')).resolves.toBe('item-A');
   expect(getter).toHaveBeenCalledTimes(3);
-  expect(Object.keys(cached.data)).toStrictEqual(['A', 'B']);
+  expect([...cached.data.keys()]).toStrictEqual(['A', 'B']);
   expect(cached.oldestTimestamp).toBe(timeB);
 
   const timeA3 = Date.now();
@@ -55,7 +55,7 @@ it('passes base test', async () => {
   const d = cached.get('D');
   await expect(d).resolves.toBe('item-D');
   expect(getter).toHaveBeenCalledTimes(4);
-  expect(Object.keys(cached.data)).toStrictEqual(['A', 'D']);
+  expect([...cached.data.keys()]).toStrictEqual(['A', 'D']);
   expect(cached.oldestTimestamp).toBe(timeA3);
 });
 
