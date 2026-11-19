@@ -2,7 +2,7 @@ import { expect as t } from 'tstyche';
 
 import { test } from '@jest/globals';
 
-import type { Extends, Implements } from '../src/types';
+import type { Extends, Implements } from '../build/types.js';
 
 test('Extends', () => {
   t<Extends<{ a: 'A'; b?: 'B' }, { a: 'A' }>>().type.toBe<{ a: 'A' }>();

@@ -4,9 +4,10 @@
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "outDir": "build/types",
+    "isolatedModules": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "outDir": "build",
     "rootDir": "./src",
     "types": ["node"],
     "verbatimModuleSyntax": true

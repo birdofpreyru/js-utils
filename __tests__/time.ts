@@ -9,7 +9,7 @@ import {
   SEC_MS,
   YEAR_MS,
   timer,
-} from '../src/time';
+} from '../build/time.js';
 
 test('Misc aliases', () => {
   expect(SEC_MS).toBe(1000);

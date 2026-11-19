@@ -7,7 +7,7 @@ import {
   jest,
 } from '@jest/globals';
 
-import { Emitter, type Listener } from '../src';
+import { Emitter, type Listener } from '../build/index.js';
 
 ts<Listener>().type.toBeAssignableFrom<() => void>();
 

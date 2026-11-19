@@ -18,11 +18,11 @@ function getTimestamp<T>(e: EntryT<T>): number {
 }
 
 export class Cached<T> {
-  private pData: Record<string, EntryT<T>> = {};
+  private pData = new Map<string, EntryT<T>>();
   private pOldestTimestamp = Number.MAX_SAFE_INTEGER;
 
   /** For test use only. */
-  get data(): Readonly<Record<string, EntryT<T>>> {
+  get data(): Readonly<Map<string, EntryT<T>>> {
     return this.pData;
   }
 
@@ -40,13 +40,14 @@ export class Cached<T> {
   private cleanCache() {
     const deadline = Date.now() - this.maxage;
     this.pOldestTimestamp = Number.MAX_SAFE_INTEGER;
-    for (const [key, entry] of Object.entries(this.pData)) {
+
+    this.pData.forEach((entry, key) => {
       const timestamp = getTimestamp(entry);
-      if (timestamp < deadline) delete this.pData[key];
+      if (timestamp < deadline) this.pData.delete(key);
       else if (timestamp < this.pOldestTimestamp) {
         this.pOldestTimestamp = timestamp;
       }
-    }
+    });
   }
 
   /**
@@ -56,7 +57,7 @@ export class Cached<T> {
    * will happen, just some cleaning operation will be skipped).
    */
   private setEntry(id: string, entry: EntryT<T>) {
-    this.pData[id] = entry;
+    this.pData.set(id, entry);
     const timestamp = getTimestamp(entry);
     if (timestamp < this.pOldestTimestamp) this.pOldestTimestamp = timestamp;
     else if (this.pOldestTimestamp < timestamp - this.maxage) this.cleanCache();
@@ -77,7 +78,7 @@ export class Cached<T> {
     const now = Date.now();
 
     if (!forceRefresh) {
-      const cached = this.pData[id];
+      const cached = this.pData.get(id);
       if (cached && getTimestamp(cached) >= now - this.maxage) return cached;
     }
 

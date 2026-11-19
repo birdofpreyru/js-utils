@@ -5,7 +5,7 @@ import {
   test,
 } from '@jest/globals';
 
-import Barrier from '../src/Barrier';
+import Barrier from '../build/Barrier.js';
 
 describe('Base usage', () => {
   test('initial values of barrier properties are correct', () => {

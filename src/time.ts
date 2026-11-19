@@ -1,4 +1,4 @@
-import Barrier, { type Executor } from './Barrier';
+import Barrier, { type Executor } from './Barrier.js';
 
 // This is not very elegant, but as of now TypeScript does not support type
 // arithmetic, thus we can't have constants assigned like `MIN_MS = 60 * SEC_MS`
@@ -71,6 +71,11 @@ export class Timer<T> extends Barrier<void, T> {
     onFulfilled?: ((value: T) => PromiseLike<TR1> | TR1) | null,
     onRejected?: ((reason: unknown) => PromiseLike<TR2> | TR2) | null,
   ): Timer<TR1 | TR2> {
+    // TODO: Perhaps, there is a better way to do something here,
+    // to avoid disabling ESLint rules, but I am pretty sure the current way
+    // works in practice, thus it is of low priority for now to look for a better
+    // solution.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-class-instance-assignment
     const res = super.then(onFulfilled, onRejected) as Timer<TR1 | TR2>;
     if (this.timeout !== undefined) void res.init(this.timeout);
     return res;

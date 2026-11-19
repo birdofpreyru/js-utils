@@ -5,8 +5,8 @@ import {
   test,
 } from '@jest/globals';
 
-import Semaphore from '../src/Semaphore';
-import { timer } from '../src/time';
+import Semaphore from '../build/Semaphore.js';
+import { timer } from '../build/time.js';
 
 describe('constructor', () => {
   it('creates non-ready semaphore by default', () => {

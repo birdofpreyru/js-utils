@@ -12,7 +12,7 @@ jobs:
           key: node-modules-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-      - run: npm test && npm run build
+      - run: npm run build && npm test
       - persist_to_workspace:
           root: .
           paths:

@@ -1,4 +1,4 @@
-import Barrier from './Barrier';
+import Barrier from './Barrier.js';
 
 /**
  * Implements a simple semaphore for async code logic.
@@ -41,7 +41,10 @@ export default class Semaphore {
       this.pQueue.push(barrier);
       await barrier;
       if (seize) this.pReady = false;
-      void this.pDrainLock!.resolve();
+
+      if (!this.pDrainLock) throw Error('Internal error');
+
+      void this.pDrainLock.resolve();
     } else if (seize) this.pReady = false;
   }
 
@@ -57,7 +60,11 @@ export default class Semaphore {
     this.pDraining = true;
     while (this.pReady && this.pQueue.length) {
       this.pDrainLock = new Barrier();
-      void this.pQueue[0]!.resolve();
+
+      const [front] = this.pQueue;
+      if (!front) throw Error('Internal error');
+
+      void front.resolve();
       await this.pDrainLock;
       void this.pQueue.shift();
     }

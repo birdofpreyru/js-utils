@@ -1,4 +1,4 @@
-import { timer } from './time';
+import { timer } from './time.js';
 
 /**
  * Attempts to perform the given async `action` up to `maxRetries` times with

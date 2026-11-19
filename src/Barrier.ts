@@ -40,8 +40,8 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
   private pState = STATE.PENDING;
 
   constructor(executor?: Executor<TR>) {
-    let resolveRef: Resolver<TR>;
-    let rejectRef: Rejecter;
+    let resolveRef: Resolver<TR> | undefined;
+    let rejectRef: Rejecter | undefined;
 
     super((resolve, reject) => {
       // Note: Enforcing `void` return type because of the BEWARE note below.
@@ -65,13 +65,15 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
       if (executor) executor(resolveRef, rejectRef);
     });
 
+    if (!resolveRef || !rejectRef) throw Error('Internal error');
+
     // NOTE: We assume, the only scenario where TR is not equal T is when
     // the Barrier is constructed by a .then() call on a "parent" barrier,
     // and in that scenario .then() itself will replace .p_resolve by another
     // resolver immediately after this constructor returns.
-    this.pResolve = resolveRef! as Resolver<T>;
+    this.pResolve = resolveRef as Resolver<T>;
 
-    this.pReject = rejectRef!;
+    this.pReject = rejectRef;
   }
 
   get resolve() {
@@ -108,6 +110,11 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
   catch<TR1>(
     onRejected?: ((reason: unknown) => PromiseLike<TR1> | TR1) | null,
   ): Barrier<T, TR1> {
+    // TODO: Perhaps, there is a better way to do something here,
+    // to avoid disabling ESLint rules, but I am pretty sure the current way
+    // works in practice, thus it is of low priority for now to look for a better
+    // solution.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-class-instance-assignment
     return super.catch(onRejected) as Barrier<T, TR1>;
   }
 
@@ -117,6 +124,11 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
   // and we should think more about it in future.
   // eslint-disable-next-line @typescript-eslint/promise-function-async
   finally(onFinally?: (() => void) | null): Barrier<TR> {
+    // TODO: Perhaps, there is a better way to do something here,
+    // to avoid disabling ESLint rules, but I am pretty sure the current way
+    // works in practice, thus it is of low priority for now to look for a better
+    // solution.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-class-instance-assignment
     return super.finally(onFinally) as Barrier<TR>;
   }
 
@@ -129,6 +141,11 @@ export default class Barrier<T = unknown, TR = T> extends Promise<TR> {
     onFulfilled?: ((value: TR) => PromiseLike<TR1> | TR1) | null,
     onRejected?: ((reason: unknown) => PromiseLike<TR2> | TR2) | null,
   ): Barrier<T, TR1 | TR2> {
+    // TODO: Perhaps, there is a better way to do something here,
+    // to avoid disabling ESLint rules, but I am pretty sure the current way
+    // works in practice, thus it is of low priority for now to look for a better
+    // solution.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-class-instance-assignment
     const res = super.then(onFulfilled, onRejected) as Barrier<T, TR1 | TR2>;
     // TODO: Revise later.
     // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/strict-void-return

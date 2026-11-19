@@ -1,8 +1,9 @@
 {
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
-    "module": "preserve",
-    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "rootDir": ".",

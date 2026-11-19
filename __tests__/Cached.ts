@@ -2,7 +2,7 @@ import mockdate from 'mockdate';
 
 import { expect, it, jest } from '@jest/globals';
 
-import { Cached, timer } from '../src';
+import { Cached, timer } from '../build/index.js';
 
 mockdate.set('2025-07-18Z');
 

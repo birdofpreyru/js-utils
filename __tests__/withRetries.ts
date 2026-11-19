@@ -2,8 +2,8 @@ import { expect as of } from 'tstyche';
 
 import { expect, it, jest } from '@jest/globals';
 
-import type * as SrcNS from '../src';
-import type * as TimeNS from '../src/time';
+import type * as SrcNS from '../build/index.js';
+import type * as TimeNS from '../build/time.js';
 
 const mockTimer = jest.fn(async () => Promise.resolve());
 
@@ -39,8 +39,6 @@ function newSyncTestAction(numFailures: number) {
 it('works as expected in a basic scenario', async () => {
   let n = 1;
   const action = jest.fn(() => {
-    // TODO: Revise.
-    // eslint-disable-next-line jest/no-conditional-in-test
     if (n++ < 2) throw Error('fail');
     return 'success';
   });
